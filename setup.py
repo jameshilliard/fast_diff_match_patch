@@ -1,7 +1,11 @@
+import sysconfig
+
 from setuptools import setup, find_packages, Extension
 
 module1 = Extension('fast_diff_match_patch',
                     sources = ['interface.cpp'],
+                    define_macros = [('Py_GIL_DISABLED', '1')]
+                        if sysconfig.get_config_var('Py_GIL_DISABLED') else [],
                     include_dirs = [],
                     libraries = [])
 

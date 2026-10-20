@@ -249,6 +249,13 @@ PyMODINIT_FUNC
 PyInit_fast_diff_match_patch(void)
 {
     auto module = PyModule_Create(&mymodule);
+    if (module == NULL)
+        return NULL;
+
+#ifdef Py_GIL_DISABLED
+    PyUnstable_Module_SetGIL(module, Py_MOD_GIL_NOT_USED);
+#endif
+
     PyModule_AddIntConstant(module, "CHAR_WIDTH", sizeof(UnicodeShim::STL_STRING_TYPE::value_type));
     return module;
 }
